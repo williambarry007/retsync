@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
-  s.executables = ["retsync"]
+  #s.executables = ["retsync"]
   
   s.add_dependency "activesupport"
   s.add_dependency "trollop"
