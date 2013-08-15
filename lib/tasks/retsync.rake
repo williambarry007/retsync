@@ -1,0 +1,383 @@
+require "retsync/version"
+
+namespace :retsync do
+
+  desc "Initializes the database"
+  task :db => :environment do
+    drop_tables
+    create_tables
+  end
+
+  desc "Drops all retsync tables"
+  task :drop_tables => :environment do drop_tables end
+
+  desc "Creates all retsync tables"
+  task :create_tables => :environment do create_tables end
+
+  #=============================================================================
+  
+  def drop_tables
+    puts "Dropping any existing caboose tables..."
+    c = ActiveRecord::Base.connection  
+    c.drop_table :agents      if c.table_exists?('agents')
+    c.drop_table :offices     if c.table_exists?('offices')
+    c.drop_table :properties  if c.table_exists?('properties')
+  end
+
+  def create_tables      
+    c = ActiveRecord::Base.connection
+    
+    c.create_table :agents do |t|      
+      t.text :beeper_phone
+	    t.text :last_name
+	    t.text :member_email
+	    t.text :phone_home_fax
+	    t.text :car_phone
+	    t.text :la_code
+	    t.text :member_page
+	    t.text :phone_pager
+	    t.text :date_created
+	    t.text :lo_code
+	    t.text :member_status
+	    t.text :phone_second_home
+	    t.text :date_modified
+	    t.text :mail_addr1
+	    t.text :nrds_id
+	    t.text :phone_toll_free
+	    t.text :defaultemail
+	    t.text :mail_addr2
+	    t.text :office_phone
+	    t.text :phone_voice_mail
+	    t.text :fax_phone
+	    t.text :mail_city
+	    t.text :other_phone
+	    t.text :phone_voice_pager
+	    t.text :first_name
+	    t.text :mail_state
+	    t.text :phone_change_date
+	    t.text :photo_count
+	    t.text :home_phone
+	    t.text :mail_zip
+	    t.text :phone_direct_office
+	    t.text :photo_date_modified
+    end
+    c.add_attachment :agents, :image
+    
+    c.create_table :offices do |t|
+      t.string :name
+      t.string :lo_code
+    end
+    
+    c.create_table :properties do |t|
+      t.string :property_type
+      t.text :acreage
+      t.text :acreage_source
+      t.text :adjoining_land_use
+      t.text :agent_notes
+      t.text :agent_other_contact_desc
+      t.text :agent_other_contact_phone
+      t.text :annual_taxes
+      t.text :approx_age
+      t.text :area
+      t.text :avm_automated_sales_disabled
+      t.text :avm_instant_valuation_disabled
+      t.text :basement_yn
+      t.text :baths
+      t.text :baths_full
+      t.text :baths_half
+      t.text :bedrooms
+      t.text :bom_date
+      t.text :book_number
+      t.text :book_page
+      t.text :book_type
+      t.text :box_on_unit
+      t.text :box_on_unit_yn
+      t.text :business_included_yn
+      t.text :buyer_broker
+      t.text :buyer_broker_type
+      t.text :buyer_city
+      t.text :buyer_name
+      t.text :buyer_state
+      t.text :buyer_zip
+      t.text :category
+      t.text :city
+      t.text :city_code
+      t.text :co_la_code
+      t.text :co_lo_code
+      t.text :co_sa_code
+      t.text :co_so_code
+      t.text :construction_date_comp
+      t.text :construction_status
+      t.text :contacts
+      t.text :contr_broker
+      t.text :contr_broker_type
+      t.text :converted
+      t.text :county
+      t.text :current_price
+      t.text :currentlease_yn
+      t.text :date_created
+      t.text :date_leased
+      t.text :date_modified
+      t.text :df_yn
+      t.text :directions
+      t.text :display_address_yn
+      t.text :dom
+      t.text :elem_school
+      t.text :expenses_assoc
+      t.text :expenses_ins
+      t.text :expenses_maint
+      t.text :expenses_mgmt
+      t.text :expenses_other
+      t.text :expenses_tax
+      t.text :expenses_utility
+      t.text :expire_date
+      t.text :flood_plain
+      t.text :foreclosure_yn
+      t.text :ftr_access
+      t.text :ftr_age
+      t.text :ftr_appliances
+      t.text :ftr_attic
+      t.text :ftr_basement
+      t.text :ftr_building
+      t.text :ftr_building_type
+      t.text :ftr_citycommunit
+      t.text :ftr_closing
+      t.text :ftr_construction
+      t.text :ftr_cooling
+      t.text :ftr_diningroom
+      t.text :ftr_docs_on_file
+      t.text :ftr_drive
+      t.text :ftr_existing_struct
+      t.text :ftr_exterior
+      t.text :ftr_extras
+      t.text :ftr_financing
+      t.text :ftr_fireplace
+      t.text :ftr_flooring
+      t.text :ftr_garage
+      t.text :ftr_heating
+      t.text :ftr_hoaamenities
+      t.text :ftr_hoaincludes
+      t.text :ftr_interior
+      t.text :ftr_internet
+      t.text :ftr_landscaping
+      t.text :ftr_laundry
+      t.text :ftr_lease_terms
+      t.text :ftr_lotdesc
+      t.text :ftr_mineralrights
+      t.text :ftr_miscellaneous
+      t.text :ftr_pool
+      t.text :ftr_porchpatio
+      t.text :ftr_possession
+      t.text :ftr_possibleuse
+      t.text :ftr_property_desc
+      t.text :ftr_restrictions
+      t.text :ftr_roof
+      t.text :ftr_sale_terms
+      t.text :ftr_sewer
+      t.text :ftr_showing
+      t.text :ftr_sprinkler
+      t.text :ftr_style
+      t.text :ftr_terms
+      t.text :ftr_topography
+      t.text :ftr_utilities
+      t.text :ftr_utilities_rental
+      t.text :ftr_utils
+      t.text :ftr_warrantyprogrm
+      t.text :ftr_water
+      t.text :ftr_waterheater
+      t.text :ftr_watersupply
+      t.text :ftr_window_treat
+      t.text :ftr_windows
+      t.text :ftr_zoning
+      t.text :geo_precision
+      t.text :georesult
+      t.text :high_school
+      t.text :hoa_fee
+      t.text :hoa_fee_yn
+      t.text :hoa_term
+      t.text :homestead_yn
+      t.text :income_gross
+      t.text :income_net
+      t.text :income_other
+      t.text :income_rental
+      t.text :internet_yn
+      t.text :la_code
+      t.text :latitude
+      t.text :lease_exp_date
+      t.text :leased_through
+      t.text :legal_block
+      t.text :legal_lot
+      t.text :legal_section
+      t.text :legals
+      t.text :levels
+      t.text :list_date
+      t.text :list_price
+      t.text :listing_type
+      t.text :lo_code
+      t.text :lockbox_yn
+      t.text :longitude
+      t.text :lot_dim_source
+      t.text :lot_dimensions
+      t.text :lot_dimensions_source
+      t.text :master_bed_lvl
+      t.text :media_flag
+      t.text :middle_school
+      t.text :mls_acct
+      t.text :municipality
+      t.text :num_units
+      t.text :num_units_occupied
+      t.text :off_mkt_date
+      t.text :off_mkt_days
+      t.text :office_notes
+      t.text :onsite_days_hours
+      t.text :onsite_yn
+      t.text :orig_lp
+      t.text :orig_price
+      t.text :other_fee
+      t.text :other_fee_type
+      t.text :outlier_yn
+      t.text :owner_name
+      t.text :owner_phone
+      t.text :parcel_id
+      t.text :pending_date
+      t.text :photo_count
+      t.text :photo_date_modified
+      t.text :photo_description
+      t.text :photo_instr
+      t.text :posession
+      t.text :price_change_date
+      t.text :price_sqft
+      t.text :proj_close_date
+      t.text :prop_desc
+      t.text :prop_id
+      t.text :prop_type
+      t.text :remarks
+      t.text :right_red_date
+      t.text :rm_bath1
+      t.text :rm_bath1_desc
+      t.text :rm_bath2
+      t.text :rm_bath2_desc
+      t.text :rm_bath3
+      t.text :rm_bath3_desc
+      t.text :rm_br1
+      t.text :rm_br1_desc
+      t.text :rm_br2
+      t.text :rm_br2_desc
+      t.text :rm_br3
+      t.text :rm_br3_desc
+      t.text :rm_br4
+      t.text :rm_br4_desc
+      t.text :rm_br5
+      t.text :rm_br5_desc
+      t.text :rm_brkfst
+      t.text :rm_brkfst_desc
+      t.text :rm_den
+      t.text :rm_den_desc
+      t.text :rm_dining
+      t.text :rm_dining_desc
+      t.text :rm_family
+      t.text :rm_family_desc
+      t.text :rm_foyer
+      t.text :rm_foyer_desc
+      t.text :rm_great
+      t.text :rm_great_desc
+      t.text :rm_kitchen
+      t.text :rm_kitchen2
+      t.text :rm_kitchen2_desc
+      t.text :rm_kitchen_desc
+      t.text :rm_laundry
+      t.text :rm_laundry_desc
+      t.text :rm_living
+      t.text :rm_living_desc
+      t.text :rm_lrdr
+      t.text :rm_lrdr_desc
+      t.text :rm_master
+      t.text :rm_master_desc
+      t.text :rm_other1
+      t.text :rm_other1_desc
+      t.text :rm_other1_name
+      t.text :rm_other2
+      t.text :rm_other2_desc
+      t.text :rm_other2_name
+      t.text :rm_other3
+      t.text :rm_other3_desc
+      t.text :rm_other3_name
+      t.text :rm_other4
+      t.text :rm_other4_desc
+      t.text :rm_other4_name
+      t.text :rm_recrm
+      t.text :rm_recrm_desc
+      t.text :rm_study
+      t.text :rm_study_desc
+      t.text :rm_sun
+      t.text :rm_sun_desc
+      t.text :road_frontage_ft
+      t.text :sa_code
+      t.text :sale_lease
+      t.text :sale_notes
+      t.text :so_code
+      t.text :sold_date
+      t.text :sold_price
+      t.text :sold_terms
+      t.text :sqft_source
+      t.text :state
+      t.text :status
+      t.text :status_date
+      t.text :status_flag
+      t.text :street
+      t.text :street_dir
+      t.text :street_name
+      t.text :street_num
+      t.text :style
+      t.text :sub_agent
+      t.text :sub_agent_type
+      t.text :sub_area
+      t.text :subdivision
+      t.text :take_photo_yn
+      t.text :third_party_comm_yn
+      t.text :tot_heat_sqft
+      t.text :tour_date
+      t.text :tour_submit_date
+      t.text :type_detailed
+      t.text :u1_dims
+      t.text :u1_free_standing_yn
+      t.text :u1_sqft_manuf
+      t.text :u1_sqft_office
+      t.text :u1_sqft_retail
+      t.text :u1_sqft_total
+      t.text :u1_sqft_warehouse
+      t.text :u1_year_built
+      t.text :u2_dims
+      t.text :u2_free_standing_yn
+      t.text :u2_sqft_manuf
+      t.text :u2_sqft_office
+      t.text :u2_sqft_retail
+      t.text :u2_sqft_total
+      t.text :u2_sqft_warehouse
+      t.text :u2_year_built
+      t.text :u3_dims
+      t.text :u3_free_standing_yn
+      t.text :u3_sqft_manuf
+      t.text :u3_sqft_office
+      t.text :u3_sqft_retail
+      t.text :u3_sqft_total
+      t.text :u3_sqft_warehouse
+      t.text :u3_year_built
+      t.text :unit_num
+      t.text :upload_source
+      t.text :vacancy_rate
+      t.text :vacant_yn
+      t.text :valuation_yn
+      t.text :vt_yn
+      t.text :waterfront
+      t.text :waterfront_yn
+      t.text :wf_feet
+      t.text :withdrawn_date
+      t.text :year_built
+      t.text :year_built_source
+      t.text :zip
+      t.float :latitude
+      t.float :longitude
+    end	
+  end
+end
